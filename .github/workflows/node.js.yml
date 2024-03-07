@@ -49,6 +49,7 @@ jobs:
 
     - run: pnpm install
     - run: pnpm build
+    - run: cd build && zip -r -m build.zip .
 
     - name: Deploy
       uses: easingthemes/ssh-deploy@main
@@ -59,4 +60,5 @@ jobs:
         REMOTE_HOST: ${{ secrets.SERVER_HOST }}
         REMOTE_PORT: ${{ secrets.SERVER_PORT }}
         REMOTE_USER: ${{ secrets.SERVER_USER }}
-        TARGET: "/data/wwwroot/docs.halo.run"
+        TARGET: ${{ secrets.SERVER_TARGET }}
+        SCRIPT_AFTER: ${{ secrets.SCRIPT_AFTER }}

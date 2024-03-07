@@ -90,7 +90,7 @@ import DockerArgs from "./slots/docker-args.md"
           # 初始化的超级管理员密码
           - --halo.security.initializer.superadminpassword=P@88w0rd
       halodb:
-        image: postgres:latest
+        image: postgres:15.4
         container_name: halodb
         restart: on-failure:3
         networks:
@@ -240,7 +240,7 @@ import DockerArgs from "./slots/docker-args.md"
 
     ```
 
-  参数详解：
+  运行参数详解：
 
   <DockerArgs />
 
@@ -301,9 +301,8 @@ import DockerArgs from "./slots/docker-args.md"
 
 你可以在下面的反向代理软件中任选一项，我们假设你已经安装好了其中一项，并对其的基本操作有一定了解。 如果你对它们没有任何了解，可以参考我们更为详细的反向代理文档：
 
-1. 使用 [OneinStack](../install/other/oneinstack.md)
-2. 使用 [Nginx Proxy Manager](../install/other/nginxproxymanager.md)
-3. 使用 [Traefik](../install/other/traefik.md)
+1. 使用 [Nginx Proxy Manager](../install/other/nginxproxymanager.md)
+2. 使用 [Traefik](../install/other/traefik.md)
 
 ### Nginx
 

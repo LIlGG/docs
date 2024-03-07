@@ -1,7 +1,4 @@
 const darkCodeTheme = require("prism-react-renderer/themes/palenight");
-const math = require("remark-math");
-const katex = require("rehype-katex");
-const mermaid = require("mdx-mermaid");
 const VersionsArchived = require("./versionsArchived.json");
 
 /** @type {import('@docusaurus/types').Config} */
@@ -10,8 +7,6 @@ const config = {
   tagline: "Halo 的文档站点",
   url: "https://docs.halo.run",
   baseUrl: "/",
-  onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon-96x96.png",
   i18n: {
     defaultLocale: "zh-Hans",
@@ -32,13 +27,11 @@ const config = {
           routeBasePath: "/",
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
-          remarkPlugins: [math, mermaid],
-          rehypePlugins: [katex],
-          lastVersion: "2.6",
+          lastVersion: "2.13",
           versions: {
             current: {
-              label: "2.7.0-SNAPSHOT",
-              path: "2.7.0-SNAPSHOT",
+              label: "2.14.0-SNAPSHOT",
+              path: "2.14.0-SNAPSHOT",
             },
           },
         },
@@ -50,9 +43,6 @@ const config = {
           changefreq: "weekly",
           priority: 0.5,
           ignorePatterns: [
-            "/1.4/**",
-            "/1.5/**",
-            "/1.6/**",
             "/2.0/**",
             "/2.1/**",
             "/2.2/**",
@@ -88,12 +78,16 @@ const config = {
         },
         items: [
           {
-            href: "https://halo.run",
-            label: "官网",
+            type: "docSidebar",
+            position: "left",
+            sidebarId: "tutorial",
+            label: "使用指南",
           },
           {
-            href: "https://bbs.halo.run",
-            label: "论坛",
+            type: "docSidebar",
+            position: "left",
+            sidebarId: "developer",
+            label: "开发者指南",
           },
           {
             type: "docsVersionDropdown",
@@ -107,10 +101,24 @@ const config = {
                 })
               ),
               {
+                to: "https://v1.legacy-docs.halo.run",
+                label: "1.x",
+              },
+              {
                 to: "/versions",
                 label: "All versions",
               },
             ],
+          },
+          {
+            href: "https://halo.run",
+            label: "官网",
+            position: "right",
+          },
+          {
+            href: "https://bbs.halo.run",
+            label: "论坛",
+            position: "right",
           },
           {
             href: "https://github.com/halo-dev/halo",
@@ -183,6 +191,7 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ["java"],
       },
       algolia: {
         apiKey: "739f2a55c6d13d93af146c22a4885669",
@@ -190,65 +199,23 @@ const config = {
         contextualSearch: true,
         appId: "OG53LY1OQH",
       },
+      zoom: {
+        selector: ".markdown :not(a) > img",
+      },
     }),
   plugins: [
+    require.resolve("docusaurus-plugin-image-zoom"),
     [
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
           {
-            to: "/1.6/getting-started/install/linux",
-            from: [
-              "/zh/install",
-              "/install",
-              "/zh/install/index",
-              "/install/index",
-              "/zh/install/linux",
-              "/install/linux",
-            ],
-          },
-          {
             to: "/getting-started/install/docker",
             from: ["/zh/install/docker", "/install/docker"],
           },
           {
-            to: "/1.6/getting-started/install/other/bt-panel",
-            from: ["/zh/install/bt-panel", "/install/bt-panel"],
-          },
-          {
-            to: "/getting-started/install/other/oneinstack",
-            from: ["/zh/install/oneinstack", "/install/oneinstack"],
-          },
-          {
-            to: "/1.6/getting-started/install/other/tencent-cloudbase",
-            from: [
-              "/zh/install/tencent-cloudbase",
-              "/install/tencent-cloudbase",
-            ],
-          },
-          {
             to: "/getting-started/prepare",
             from: ["/zh/install/prepare", "/install/prepare"],
-          },
-          {
-            to: "/getting-started/config",
-            from: ["/zh/install/config", "/install/config"],
-          },
-          {
-            to: "/1.6/getting-started/upgrade",
-            from: ["/zh/install/upgrade", "/install/upgrade"],
-          },
-          {
-            to: "/getting-started/downloads",
-            from: ["/zh/install/downloads", "/install/downloads"],
-          },
-          {
-            to: "/user-guide/backup-migration",
-            from: ["/zh/user-guide/backup-migration"],
-          },
-          {
-            to: "/user-guide/markdown",
-            from: ["/zh/user-guide/markdown"],
           },
           {
             to: "/developer-guide/core/structure",
@@ -268,27 +235,22 @@ const config = {
           },
         ],
         createRedirects(existingPath) {
-          if (existingPath.startsWith("/1.5/")) {
+          if (existingPath.startsWith("/2.14.0-SNAPSHOT/")) {
             return [
-              existingPath.replace("/1.5/", "/1.5.4/"),
-              existingPath.replace("/1.5/", "/1.5.3/"),
-              existingPath.replace("/1.5/", "/1.5.2/"),
-              existingPath.replace("/1.5/", "/1.5.1/"),
-              existingPath.replace("/1.5/", "/1.5.0/"),
-            ];
-          }
-          if (existingPath.startsWith("/1.4/")) {
-            return [existingPath.replace("/1.4/", "/1.4.17/")];
-          }
-          if (existingPath.startsWith("/2.7.0-SNAPSHOT/")) {
-            return [
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.0.0-SNAPSHOT/"),
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.1.0-SNAPSHOT/"),
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.2.0-SNAPSHOT/"),
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.3.0-SNAPSHOT/"),
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.4.0-SNAPSHOT/"),
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.5.0-SNAPSHOT/"),
-              existingPath.replace("/2.7.0-SNAPSHOT/", "/2.6.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.0.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.1.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.2.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.3.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.4.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.5.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.6.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.7.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.8.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.9.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.10.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.11.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.12.0-SNAPSHOT/"),
+              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.13.0-SNAPSHOT/"),
             ];
           }
           return undefined;
@@ -298,16 +260,9 @@ const config = {
   ],
   scripts: [
     {
-      src: "https://analytics.halo.run/umami.js",
+      src: "https://analytics.halo.run/script.js",
       async: true,
-      defer: true,
-      "data-website-id": "7e8d48ad-973d-4b44-b36d-ea1f1df25baa",
-    },
-  ],
-  stylesheets: [
-    {
-      href: "https://unpkg.com/katex@0.12.0/dist/katex.min.css",
-      type: "text/css",
+      "data-website-id": "f9995c32-81e9-4e07-91f2-c276a0d63c9f",
     },
   ],
 };
