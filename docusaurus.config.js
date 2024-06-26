@@ -27,11 +27,11 @@ const config = {
           routeBasePath: "/",
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
-          lastVersion: "2.13",
+          lastVersion: "2.16",
           versions: {
             current: {
-              label: "2.14.0-SNAPSHOT",
-              path: "2.14.0-SNAPSHOT",
+              label: "2.17.0-SNAPSHOT",
+              path: "2.17.0-SNAPSHOT",
             },
           },
         },
@@ -94,16 +94,21 @@ const config = {
             position: "right",
             dropdownActiveClassDisabled: true,
             dropdownItemsAfter: [
+              {
+                type: "html",
+                value: '<hr class="dropdown-separator">',
+              },
+              {
+                type: "html",
+                className: "dropdown-archived-versions",
+                value: "<b>Archived versions</b>",
+              },
               ...Object.entries(VersionsArchived).map(
                 ([versionName, versionUrl]) => ({
                   label: versionName,
                   href: versionUrl,
                 })
               ),
-              {
-                to: "https://v1.legacy-docs.halo.run",
-                label: "1.x",
-              },
               {
                 to: "/versions",
                 label: "All versions",
@@ -193,12 +198,6 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ["java"],
       },
-      algolia: {
-        apiKey: "739f2a55c6d13d93af146c22a4885669",
-        indexName: "docs",
-        contextualSearch: true,
-        appId: "OG53LY1OQH",
-      },
       zoom: {
         selector: ".markdown :not(a) > img",
       },
@@ -235,22 +234,15 @@ const config = {
           },
         ],
         createRedirects(existingPath) {
-          if (existingPath.startsWith("/2.14.0-SNAPSHOT/")) {
+          if (existingPath.startsWith("/2.17.0-SNAPSHOT/")) {
             return [
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.0.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.1.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.2.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.3.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.4.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.5.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.6.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.7.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.8.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.9.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.10.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.11.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.12.0-SNAPSHOT/"),
-              existingPath.replace("/2.14.0-SNAPSHOT/", "/2.13.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.10.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.11.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.12.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.13.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.14.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.15.0-SNAPSHOT/"),
+              existingPath.replace("/2.17.0-SNAPSHOT/", "/2.16.0-SNAPSHOT/"),
             ];
           }
           return undefined;
@@ -258,6 +250,23 @@ const config = {
       },
     ],
   ],
+  webpack: {
+    jsLoader: (isServer) => ({
+      loader: require.resolve("swc-loader"),
+      options: {
+        jsc: {
+          parser: {
+            syntax: "typescript",
+            tsx: true,
+          },
+          target: "es2017",
+        },
+        module: {
+          type: isServer ? "commonjs" : "es6",
+        },
+      },
+    }),
+  },
   scripts: [
     {
       src: "https://analytics.halo.run/script.js",

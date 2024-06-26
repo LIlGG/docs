@@ -40,6 +40,14 @@ module.exports = {
             "getting-started/install/jar-file",
             {
               type: "category",
+              label: "云平台",
+              link: {
+                type: "generated-index",
+              },
+              items: ["getting-started/install/cloud/tencent-cloud-lighthouse"],
+            },
+            {
+              type: "category",
               label: "其他指南",
               link: {
                 type: "generated-index",
@@ -73,6 +81,7 @@ module.exports = {
         "user-guide/attachments",
         "user-guide/themes",
         "user-guide/plugins",
+        "user-guide/app-store",
         "user-guide/users",
         "user-guide/settings",
         "user-guide/backup",
@@ -172,6 +181,7 @@ module.exports = {
                 "developer-guide/plugin/api-reference/server/reverseproxy",
                 "developer-guide/plugin/api-reference/server/finder-for-theme",
                 "developer-guide/plugin/api-reference/server/template-for-theme",
+                "developer-guide/plugin/api-reference/server/websocket",
                 {
                   type: "category",
                   label: "扩展点",
@@ -186,6 +196,7 @@ module.exports = {
                     "developer-guide/plugin/api-reference/server/extension-points/comment-subject",
                     "developer-guide/plugin/api-reference/server/extension-points/comment-widget",
                     "developer-guide/plugin/api-reference/server/extension-points/notifier",
+                    "developer-guide/plugin/api-reference/server/extension-points/template-head-processor",
                     "developer-guide/plugin/api-reference/server/extension-points/post-content",
                     "developer-guide/plugin/api-reference/server/extension-points/singlepage-content",
                     "developer-guide/plugin/api-reference/server/extension-points/username-password-authentication-manager",
@@ -224,6 +235,8 @@ module.exports = {
                     "developer-guide/plugin/api-reference/ui/extension-points/theme-list-item-operation-create",
                     "developer-guide/plugin/api-reference/ui/extension-points/plugin-list-item-field-create",
                     "developer-guide/plugin/api-reference/ui/extension-points/post-list-item-field-create",
+                    "developer-guide/plugin/api-reference/ui/extension-points/user-detail-tabs-create",
+                    "developer-guide/plugin/api-reference/ui/extension-points/uc-user-profile-tabs-create",
                   ],
                 },
                 {

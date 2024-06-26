@@ -3,7 +3,7 @@ title: 使用 Docker 部署
 description: 使用 Docker 部署
 ---
 
-import DockerArgs from "./slots/docker-args.md"
+import DockerArgs from "./slots/_docker-args.md"
 
 :::info
 在继续操作之前，我们推荐您先阅读[《写在前面》](../prepare)，这可以快速帮助你了解 Halo。
@@ -42,7 +42,7 @@ import DockerArgs from "./slots/docker-args.md"
 1. 创建容器
 
     ```bash
-    docker run -it -d --name halo -p 8090:8090 -v ~/.halo2:/root/.halo2 halohub/halo:2.13
+    docker run -d --name halo -p 8090:8090 -v ~/.halo2:/root/.halo2 halohub/halo:2.13
     ```
 
     :::info
@@ -86,5 +86,5 @@ import DockerArgs from "./slots/docker-args.md"
   修改版本号后，按照最初安装的方式，重新创建容器即可。
 
     ```bash
-    docker run -it -d --name halo -p 8090:8090 -v ~/.halo2:/root/.halo2 halohub/halo:2.13
+    docker run -d --name halo -p 8090:8090 -v ~/.halo2:/root/.halo2 halohub/halo:2.13
     ```
